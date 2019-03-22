@@ -1,0 +1,14 @@
+name: ${project.name}
+description: ${project.description}
+version: ${project.version}
+main: ${project.groupId}.${project.artifactId}.${project.name}
+commands:
+    listeners:
+        description: "Checks which plugins are listening to the given type of event."
+        usage: "\u00A77Usage: \u00A7C/listeners <event type>"
+        permission: "EventChecker.use"
+        permission-message: "\u00A7CYou need the permission 'EventChecker.use' in order to use this!"
+permissions:
+    EventChecker.use:
+        description: The permission required in order to use the /listeners command
+        default: op
