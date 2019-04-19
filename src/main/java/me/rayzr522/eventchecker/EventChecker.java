@@ -1,8 +1,11 @@
 package me.rayzr522.eventchecker;
 
+import me.rayzr522.eventchecker.util.ReflectionUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,8 +14,24 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class EventChecker extends JavaPlugin {
+public class EventChecker extends JavaPlugin implements TabCompleter {
+    @Override
+    public void onEnable() {
+        getCommand("listeners").setTabCompleter(this);
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+//        return ReflectionUtil.getEventClasses(Bukkit.getServer().getClass().getClassLoader()).stream()
+        return ReflectionUtil.getEventClasses(Bukkit.getPluginManager().getPlugin("MobArena").getClass().getClassLoader()).stream()
+                .map(Class::getCanonicalName)
+                .filter(name -> name.startsWith(args[0]))
+                .collect(Collectors.toList());
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1) {
@@ -38,7 +57,7 @@ public class EventChecker extends JavaPlugin {
 
         Method getHandlerList;
         try {
-            getHandlerList = eventClass.getMethod("getHandlerList");
+            getHandlerList = eventClass.getDeclaredMethod("getHandlerList");
         } catch (NoSuchMethodException e) {
             sender.sendMessage(ChatColor.RED + "Missing getHandlerList method on event type!");
             return true;
@@ -53,7 +72,7 @@ public class EventChecker extends JavaPlugin {
         }
 
         sender.sendMessage(String.format(
-                "%s%s----------%s Listeners for %s%s %s%s----------",
+                "%s%s               %s Listeners for %s%s %s%s               ",
                 ChatColor.DARK_GRAY,
                 ChatColor.STRIKETHROUGH,
                 ChatColor.YELLOW,
