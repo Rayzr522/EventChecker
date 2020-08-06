@@ -26,7 +26,7 @@ public class EventChecker extends JavaPlugin implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return ReflectionUtil.getEventClasses(Bukkit.getServer().getClass().getClassLoader()).stream()
+        return ReflectionUtil.getAllEventClasses().stream()
                 .map(Class::getCanonicalName)
                 .filter(name -> name.startsWith(args[0]))
                 .collect(Collectors.toList());
