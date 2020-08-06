@@ -1,6 +1,5 @@
 package me.rayzr522.eventchecker;
 
-import me.rayzr522.eventchecker.util.ReflectionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -17,6 +16,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import me.rayzr522.eventchecker.util.ReflectionUtil;
+
 public class EventChecker extends JavaPlugin implements TabCompleter {
     @Override
     public void onEnable() {
@@ -25,8 +26,7 @@ public class EventChecker extends JavaPlugin implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-//        return ReflectionUtil.getEventClasses(Bukkit.getServer().getClass().getClassLoader()).stream()
-        return ReflectionUtil.getEventClasses(Bukkit.getPluginManager().getPlugin("MobArena").getClass().getClassLoader()).stream()
+        return ReflectionUtil.getEventClasses(Bukkit.getServer().getClass().getClassLoader()).stream()
                 .map(Class::getCanonicalName)
                 .filter(name -> name.startsWith(args[0]))
                 .collect(Collectors.toList());
