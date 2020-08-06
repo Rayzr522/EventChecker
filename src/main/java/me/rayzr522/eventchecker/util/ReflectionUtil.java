@@ -26,7 +26,7 @@ public class ReflectionUtil {
                         .map(classInfo -> {
                             try {
                                 return classInfo.load();
-                            } catch (NoClassDefFoundError e) {
+                            } catch (NoClassDefFoundError | UnsupportedClassVersionError e) {
                                 return null;
                             }
                         })
