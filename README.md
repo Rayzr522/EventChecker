@@ -10,7 +10,7 @@ However, the client I was assisting had dozens upon dozens of complicated Bukkit
 
 We needed to quickly locate which plugins were listening to `InventoryClickEvent`s and messing with the timings.
 
-*Enter EventChecker!* A quick `/listeners org.bukkit.event.inventory.InventoryClickEvent` helped us find that only half a dozen or so plugins were even messing with `InventoryClickEvent`s.
+_Enter EventChecker!_ A quick `/listeners org.bukkit.event.inventory.InventoryClickEvent` helped us find that only half a dozen or so plugins were even messing with `InventoryClickEvent`s.
 
 From there, it only took us about 15 minutes to figure out which one was the culprit by trial and error.
 
@@ -24,8 +24,4 @@ The only requirements are **Vault** and a permissions plugin!
 
 Simply do `/listeners <full event class name>` to find all listeners for the given event class. This does support auto-complete for class names, and functions both with built in Bukkit event classes as well as custom plugin event classes.
 
-*The permission to use this command is `EventChecker.use`.*
-
-## Join Me
-
-[![Discord Badge](https://github.com/Rayzr522/ProjectResources/raw/master/RayzrDev/badge-small.png)](https://rayzr.dev/join)
+_The permission to use this command is `EventChecker.use`._
